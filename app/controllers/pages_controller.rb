@@ -1,13 +1,17 @@
 class PagesController < ApplicationController
-  def home
-    @title = 'Home'
-  end
+    def home
+        @title = 'Home'
+    end
 
-  def contact
-    @title = 'Contact'
-  end
+    def contact
+        @title = 'Contact'
+    end
 
-  def about
-    @title = 'About'
-  end
+    def about
+        @title = 'About'
+    end
+
+    # Currently just to test title helper.
+    def notitle
+    end
 end

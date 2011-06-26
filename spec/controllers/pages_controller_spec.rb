@@ -27,4 +27,12 @@ describe PagesController do
         end
     end
 
+    describe "GET 'notitle'" do
+        it "should be successful and have correct title" do
+            get 'notitle'
+            response.should be_success
+            response.should have_selector('title', :content => 'Ruby on Rails Tutorial Sample App')
+        end
+    end
+
 end
