@@ -13,5 +13,6 @@ class PagesController < ApplicationController
 
     # Currently just to test title helper.
     def notitle
+        @title = '' # Oops.
     end
 end
