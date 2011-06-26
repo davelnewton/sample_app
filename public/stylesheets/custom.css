@@ -11,11 +11,13 @@ header {
 }
 
 header img {
+    float: left;
     padding: 1em;
     background: #fff;
 }
 
 section {
+    clear: both;
     margin-top: 1em;
     font-size: 120%;
     padding: 20px;
@@ -76,6 +78,20 @@ nav ul li a:visited {
 
 nav ul li a:hover {
     text-decoration: underline;
+}
+
+/* Footer */
+
+footer {
+    text-align: center;
+    margin-top: 10px;
+    width: 710px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer nav {
+    float: none;
 }
 
 /* Sign up button */
