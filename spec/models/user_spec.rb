@@ -111,20 +111,26 @@ describe User do
                 @user.has_password?('not_my_password').should be_false
             end
         end
+
+        describe "authentication method" do
+            it "should return nil on email/password mismatch" do
+                u = User.authenticate(@attr[:email], 'not_my_password')
+                u.should be_nil
+            end
+
+            it "should return nil for an email that isn't found" do
+                u = User.authenticate('nobodies_email@narnar.com', @attr[:password])
+                u.should be_nil
+            end
+
+            it "should return the user when email/password matches a user" do
+                u = User.authenticate(@attr[:email], @attr[:password])
+                u.should == @user
+            end
+        end
     end
 
 end
-
-# == Schema Information
-#
-# Table name: users
-#
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
 
 # == Schema Information
 #

@@ -21,6 +21,12 @@ class User < ActiveRecord::Base
         encrypted_password == encrypt(unencrypted_password)
     end
 
+    def self.authenticate(email, unencrypted_password)
+        u = find_by_email(email)
+        return nil if u.nil?
+        return u.has_password?(unencrypted_password) ? u : nil
+    end
+
     private
 
         def encrypt_password
@@ -46,17 +52,6 @@ end
 #
 # Table name: users
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
-# == Schema Information
-#
-# Table name: users
-#
 #  id                 :integer         not null, primary key
 #  name               :string(255)
 #  email              :string(255)
@@ -65,4 +60,3 @@ end
 #  encrypted_password :string(255)
 #  salt               :string(255)
 #
-
