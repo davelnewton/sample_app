@@ -3,8 +3,28 @@ require 'spec_helper'
 describe UsersController do
     render_views
 
+    describe "POST 'create'" do
+        describe "failure" do
+            before(:each) do
+                @attr = { :name => '', :email => '', :password => '', :password_confirmation => ''}
+            end
+
+            it "should not create a user" do
+                lambda do
+                    post :create, :user => @attr
+                end.should_not change(User, :count)
+            end
+
+            it "should return to 'new' and have the right title" do
+                post :create, :user => @attr
+                response.should render_template('new')
+                response.should have_selector('title', :content => ' | Sign up')
+            end
+        end
+    end
+
     describe "GET 'show'" do
-        before :each do
+        before(:each) do
             @user = Factory :user
         end
 
@@ -32,7 +52,7 @@ describe UsersController do
 
     describe "GET 'new'" do
         it "should be successful and have correct title" do
-            get 'new'
+            get :new
             response.should be_success
             response.should have_selector('title', :content => ' | Sign up')
         end

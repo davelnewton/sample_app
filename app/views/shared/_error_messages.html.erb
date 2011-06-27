@@ -1,0 +1,10 @@
+<% if @user.errors.any? %>
+    <div id="error_explanation" class="round">
+        <h2><%= pluralize(@user.errors.count, "error") %> during save!</h2>
+        <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
