@@ -101,6 +101,16 @@ describe User do
         it "should set the encrypted password" do
             @user.encrypted_password.should_not be_blank
         end
+
+        describe "has_password? method" do
+            it "should return true if passwords match" do
+                @user.has_password?(@attr[:password]).should be_true
+            end
+
+            it "should be false if passwords don't match" do
+                @user.has_password?('not_my_password').should be_false
+            end
+        end
     end
 
 end
@@ -115,3 +125,17 @@ end
 #  created_at :datetime
 #  updated_at :datetime
 #
+
+# == Schema Information
+#
+# Table name: users
+#
+#  id                 :integer         not null, primary key
+#  name               :string(255)
+#  email              :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  encrypted_password :string(255)
+#  salt               :string(255)
+#
+
