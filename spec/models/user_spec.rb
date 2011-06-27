@@ -33,34 +33,36 @@ describe User do
 
     # TODO Put email validations inside a 'describe' block as per password.
 
-    it "should accept valid email addresses" do
-        valid_addrs = %w[user@foo.com WAT_WAT@nar.nar.nar first.last@long.subdomain]
-        valid_addrs.each do |addr|
-            user = User.new(@attr.merge({ :email => addr }))
-            user.should be_valid
+    describe "email validations" do
+        it "should accept valid email addresses" do
+            valid_addrs = %w[user@foo.com WAT_WAT@nar.nar.nar first.last@long.subdomain]
+            valid_addrs.each do |addr|
+                user = User.new(@attr.merge({ :email => addr }))
+                user.should be_valid
+            end
         end
-    end
 
-    it "should reject invalid email addresses" do
-        bad_addrs = %w[not_email.addr missing_at_sign.org no@subdomain.]
-        bad_addrs.each do |addr|
-            user = User.new(@attr.merge({ :email => addr }))
+        it "should reject invalid email addresses" do
+            bad_addrs = %w[not_email.addr missing_at_sign.org no@subdomain.]
+            bad_addrs.each do |addr|
+                user = User.new(@attr.merge({ :email => addr }))
+                user.should_not be_valid
+            end
+        end
+
+        it "should reject duplicate email addresses" do
+            User.create!(@attr)
+            user = User.new(@attr)
             user.should_not be_valid
         end
-    end
 
-    it "should reject duplicate email addresses" do
-        User.create!(@attr)
-        user = User.new(@attr)
-        user.should_not be_valid
-    end
+        it "should reject email addresses that differ only in upper/lower case" do
+            uc_email = @attr[:email].upcase
 
-    it "should reject email addresses that differ only in upper/lower case" do
-        uc_email = @attr[:email].upcase
-
-        User.create!(@attr.merge({ :email => uc_email }))
-        user = User.new(@attr)
-        user.should_not be_valid
+            User.create!(@attr.merge({ :email => uc_email }))
+            user = User.new(@attr)
+            user.should_not be_valid
+        end
     end
 
     describe "password validations" do
