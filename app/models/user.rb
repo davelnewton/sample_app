@@ -11,6 +11,19 @@ class User < ActiveRecord::Base
     validates :password, :presence => true,
                          :confirmation => true, # TODO Creates password_confirmation
                          :length => { :within => 6..40 }
+
+    before_save :encrypt_password
+
+    private
+
+        def encrypt_password
+            self.encrypted_password = encrypt(password)
+        end
+
+        # TODO Implement
+        def encrypt(s)
+            return s
+        end
 end
 
 # == Schema Information
