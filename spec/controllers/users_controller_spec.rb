@@ -3,7 +3,7 @@ require 'spec_helper'
 describe UsersController do
     render_views
 
-    describe "POST 'create'" do
+    describe "POST 'create' (sign up)" do
         describe "failure" do
             before(:each) do
                 @attr = { :name => '', :email => '', :password => '', :password_confirmation => ''}
@@ -47,6 +47,11 @@ describe UsersController do
                 post :create, :user => @attr
                 flash[:success].should =~ /welcome to the sample app/i
                 response.should redirect_to(user_path(assigns(:user)))
+            end
+
+            it "should automatically sign the user in" do
+                post :create, :user => @attr
+                controller.should be_signed_in
             end
         end
     end
