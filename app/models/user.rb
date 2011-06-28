@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
     attr_accessor :password # TODO "Virtual" attribute
     attr_accessible :name, :email, :password, :password_confirmation
 
+    has_many :microposts
+
     email_regex = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
 
     validates :name, :presence => true, :length => { :maximum => 50 }
