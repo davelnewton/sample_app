@@ -4,4 +4,6 @@
   This is the home page for the RoR 3 Tutorial Sample App.
 </p>
 
-<%= link_to 'Sign up now!', signup_path, :class => 'signup_button round' %>
+<% if !signed_in? %>
+    <%= link_to 'Sign up now!', signup_path, :class => 'signup_button round' %>
+<% end %>
