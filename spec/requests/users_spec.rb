@@ -16,6 +16,21 @@ describe "Users" do
                 response.should have_selector("div#error_explanation")
             end.should_not change(User, :count)
         end
+
+        it "should clear the password fields" do
+            visit signup_path
+            fill_in "Name", :with => "Example User"
+            fill_in "Email", :with => "" # Force form failure
+            fill_in "Password", :with => "foobar"
+            fill_in "Confirmation", :with => "foobar"
+            click_button
+
+            response.should render_template('users/new')
+            response.should have_selector("div#error_explanation")
+
+            field_labeled("Password").value.should == ""
+            field_labeled("Confirmation").value.should == ""
+        end
     end
 
     describe "success" do
