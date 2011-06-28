@@ -7,8 +7,20 @@ describe Micropost do
         @attr = { :content => 'Micropost rspec content' }
     end
 
-    it "should create a micropost when given valid attributes" do
-        Micropost.create! @attr
+    describe "validations" do
+        it "should require a user id" do
+            Micropost.new(@attr).should_not be_valid
+        end
+
+        it "should require non-blank, non-nil content" do
+            Micropost.new(@attr.merge(:content => nil)).should_not be_valid
+            Micropost.new(@attr.merge(:content => '')).should_not be_valid
+            Micropost.new(@attr.merge(:content => '   ')).should_not be_valid
+        end
+
+        it "should reject content that's too long" do
+            Micropost.new(@attr.merge(:content => 'o'*141)).should_not be_valid
+        end
     end
 
     describe "user associations" do

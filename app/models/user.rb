@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
     attr_accessor :password # TODO "Virtual" attribute
     attr_accessible :name, :email, :password, :password_confirmation
 
-    has_many :microposts
+    has_many :microposts, :dependent => :destroy
 
     email_regex = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
 
